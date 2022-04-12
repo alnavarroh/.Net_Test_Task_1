@@ -41,7 +41,7 @@ namespace REST_API.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return BadRequest("Username or Password not found");
+            return BadRequest(new { message = "Username or Password not found" });
         }
 
         [HttpPut("updateBalance")]
@@ -50,20 +50,20 @@ namespace REST_API.Controllers
             try
             {
                 var user = await _context.User.FirstOrDefaultAsync(x => x.Login == request.Login);
-                if (user != null && user.Login == request.Login)
+                if (user != null && user.Login == request.Login && request.GetType().GetProperty("USD_Balance") != null)
                 {
                     user.USD_Balance = request.USD_Balance;
                     _context.Entry(user);
 
                     await _context.SaveChangesAsync();
-                    return Ok($"Balance Updated for user {user.Login} to {user.USD_Balance}");
+                    return Ok(new { message = $"Balance Updated for user {user.Login} to {user.USD_Balance}" });
                 }
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-            return BadRequest("Can't update balance");
+            return BadRequest(new { message = "Can't update balance" });
         }
 
         [HttpDelete("deleteUser/{UserToDelete}")]
@@ -75,16 +75,16 @@ namespace REST_API.Controllers
                 if (userRequesting != null && userRequesting.Role == "Admin")
                 {
                     var request = await _context.User.FirstOrDefaultAsync(x => x.Login == UserToDelete);
-                    if (request == null) return NotFound($"User {UserToDelete} not found");
+                    if (request == null) return NotFound(new { message = $"User {UserToDelete} not found" });
 
                     _context.Remove(request);
 
                     await _context.SaveChangesAsync();
-                    return Ok($"User {request.Login} deleted successfully");
+                    return Ok(new { message = $"User {request.Login} deleted successfully" });
                 }
                 else
                 {
-                    return BadRequest("User can't delete users");
+                    return BadRequest(new { message = "User can't delete users" });
                 }
             }
             catch(Exception ex)
