@@ -1,4 +1,4 @@
-# .Net_Test_Task
+# .Net Test Task
 
 The database file is located in the root folder, its called database.db
 
