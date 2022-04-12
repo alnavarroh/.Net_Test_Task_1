@@ -32,19 +32,19 @@ _{<br>
 Login being the Login parameter of the user making the call and UserToDelete being the Login value of the user to delete.
 <br>
 <br>
-Database Contains the following data:<br>
-**Table:** Users<br>
+Database Contains the following table:<br>
+**Table:** Users
+
 | **Name**      | **Data Type** |
 |-------------|-----------|
-| Login       | TEXT      |
+| Login (Primary Key)| TEXT      |
 | Password    | TEXT      |
 | Role        | TEXT      |
 | USD_Balance | REAL      |
 
 <br>
-<br>
+And the table contains the following data:
 
-And the database has the following data:<br>
 | Login | Password | Role  | USD_Balance |
 |-------|----------|-------|-------------|
 | Alan  | hunter2  | Admin |          10 |
